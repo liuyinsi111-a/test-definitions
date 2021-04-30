@@ -1,0 +1,26 @@
+name: Gitee repos mirror periodic sync job
+
+on:
+  # push推送时触发
+  push:
+  # 定时任务触发
+  #schedule:
+    # Runs at 01:00 UTC (9:00 AM Beijing) every day
+    #- cron:  '0 1 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Mirror the Github organization repos to Gitee.
+      uses: Yikun/git-mirror-action@v0.01
+      with:
+        src: github/liuyinsi111-a
+        dst: gitee/liu-yinsi
+        dst_key: ${{ secrets.GITEE_PRIVATE_SSH_KEY }}
+        dst_token: ${{ secrets.GITEE_PRIVATE_TOKEN }}
+        white_list: "test-definitions"
+        static_list: "test-definitions"
+        force_update: true
